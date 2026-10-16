@@ -30,9 +30,18 @@ jobs:
           if [ ! -f "buildozer.spec" ]; then
             buildozer init
           fi
+          
+          # 1. تفعيل قبول الترخيص في ملف الإعدادات
           sed -i '/android.accept_sdk_license/d' buildozer.spec
           echo "android.accept_sdk_license = True" >> buildozer.spec
-          buildozer -v android debug
+          
+          # 2. إنشاء مجلد التراخيص وقبولها تلقائياً بالكامل وتجاوز خطأ Aidl
+          mkdir -p ~/.buildozer/android/platform/android-sdk/licenses
+          echo -e "\n8933b5222b19272001680c733980350d7b6c096a\nd56f5187479451eabf01fb78af6dfcb131a6481e\n24333f8a63c6825ea9c5514f83c2829b004d1fee" > ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-license
+          echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-preview-license
+
+          # 3. تشغيل البناء مع قبول أي مطالبة ترخيص تفاعلية تلقائياً
+          yes | buildozer -v android debug
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
