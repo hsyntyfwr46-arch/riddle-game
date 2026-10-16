@@ -1,27 +1,22 @@
-name: Build
-on: [push]
+name: Build Android APK
+
+on: [push, workflow_dispatch]
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v3
-    - name: Prepare System
-      run: sudo apt update && sudo apt install -y openjdk-17-jdk git unzip libltdl-dev zlib1g-dev build-essential
-    - name: Install Tools
-      run: pip install --upgrade pip && pip install buildozer cython==0.29.33
-    - name: Setup SDK and Licenses
-      run: |
-        mkdir -p ~/.buildozer/android/platform/android-sdk/licenses
-        mkdir -p ~/.buildozer/android/platform/android-sdk/cmdline-tools/latest
-        echo -e "\n8933b5222b19272001680c733980350d7b6c096a" > ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-license
-    - name: Build APK
-      run: |
-        if [ ! -f "buildozer.spec" ]; then buildozer init; fi
-        echo "android.accept_sdk_license = True" >> buildozer.spec
-        echo "android.api = 31" >> buildozer.spec
-        echo "android.minapi = 21" >> buildozer.spec
-        buildozer -v android debug
-    - uses: actions/upload-artifact@v4
-      with:
-        name: apk
-        path: bin/*.apk
+      - uses: actions/checkout@v3
+
+      - name: Build with Buildozer
+        uses: ArtemS-G/action-buildozer@v1.2.0
+        with:
+          command: buildozer -v android debug
+          buildozer_version: master
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-apk
+          path: bin/*.apk
