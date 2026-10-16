@@ -35,7 +35,10 @@ jobs:
           fi
           sed -i 's/#android.accept_sdk_license = False/android.accept_sdk_license = True/g' buildozer.spec
           sed -i 's/android.accept_sdk_license = False/android.accept_sdk_license = True/g' buildozer.spec
-          # إضافة السطر ضماناً لعدم الحذف
+          sed -i 's/#android.api =.*/android.api = 33/g' buildozer.spec
+          sed -i 's/android.api =.*/android.api = 33/g' buildozer.spec
+          sed -i 's/#android.minapi =.*/android.minapi = 21/g' buildozer.spec
+          sed -i 's/android.minapi =.*/android.minapi = 21/g' buildozer.spec
           if ! grep -q "android.accept_sdk_license = True" buildozer.spec; then
             echo "android.accept_sdk_license = True" >> buildozer.spec
           fi
