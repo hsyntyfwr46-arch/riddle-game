@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Checkout
         uses: actions/checkout@v3
 
       - name: Set up Python
@@ -18,30 +18,37 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install Dependencies
+      - name: Install dependencies
         run: |
-          sudo apt update
-          sudo apt install -y openjdk-17-jdk git unzip libltdl-dev
-          pip install --upgrade pip
-          pip install buildozer cython==0.29.33
+          sudo apt-get update
+          sudo apt-get install -y \
+              build-essential \
+              git \
+              python3-dev \
+              ffmpeg \
+              libsdl2-dev \
+              libsdl2-image-dev \
+              libsdl2-mixer-dev \
+              libsdl2-ttf-dev \
+              libportmidi-dev \
+              libswscale-dev \
+              libavformat-dev \
+              libavcodec-dev \
+              zlib1g-dev \
+              libunwind-dev \
+              openjdk-17-jdk \
+              unzip \
+              ant
 
-      - name: Prepare Android SDK & Licenses
-        run: |
-          mkdir -p ~/.buildozer/android/platform/android-sdk/licenses
-          echo -e "\n8933b5222b19272001680c733980350d7b6c096a\nd56f5187479451eabf01fb78af6dfcb131a6481e\n24333f8a63c6825ea9c5514f83c2829b004d1fee" > ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-license
-          echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-preview-license
+      - name: Build with Buildozer
+        uses: ArtemSBulgakov/buildozer-action@v1
+        with:
+          command: android debug
+          workdir: .
+          buildozer_version: master
 
-      - name: Run Buildozer
-        run: |
-          if [ ! -f "buildozer.spec" ]; then
-            buildozer init
-          fi
-          sed -i '/android.accept_sdk_license/d' buildozer.spec
-          echo "android.accept_sdk_license = True" >> buildozer.spec
-          buildozer -v android debug
-
-      - name: Upload APK Artifact
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: app-apk
+          name: package
           path: bin/*.apk
