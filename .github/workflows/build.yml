@@ -17,7 +17,23 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Verify Files
+      - name: Install Dependencies & Buildozer
         run: |
-          ls -la
-          cat requirements.txt
+          sudo apt-get update
+          sudo apt-get install -y git zip unzip openjdk-17-jdk autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
+          pip install --upgrade pip
+          pip install buildozer Cython==0.29.33
+
+      - name: Initialize Buildozer & Build APK
+        run: |
+          if [ ! -f "buildozer.spec" ]; then
+            buildozer init
+          fi
+          sed -i 's/#log_level = 2/log_level = 2/g' buildozer.spec
+          buildozer -v android debug
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-debug-apk
+          path: bin/*.apk
