@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#14213d">
+  <title>محاكاة توعوية — شبكة تجريبية</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page-shell">
+    <section class="intro" aria-labelledby="intro-title">
+      <div class="brand-mark" aria-hidden="true">◎</div>
+      <p class="eyebrow">مختبر توعية بالأمن السيبراني</p>
+      <h1 id="intro-title">تعرّف على علامات التصيّد</h1>
+      <p>هذه محاكاة محلية للتدريب فقط، وليست خدمة تسجيل دخول حقيقية.</p>
+      <ul class="safety-list">
+        <li>لا تُرسل أي بيانات إلى الإنترنت.</li>
+        <li>لا تحفظ اسم المستخدم أو كلمة المرور.</li>
+        <li>استخدم بيانات وهمية فقط أثناء التدريب.</li>
+      </ul>
+    </section>
+
+    <section class="login-card" aria-labelledby="login-title">
+      <div class="demo-label"><span></span> حساب تجريبي — ليس موقعًا حقيقيًا</div>
+      <div class="logo" aria-hidden="true">loop</div>
+      <h2 id="login-title">مرحبًا بعودتك</h2>
+      <p class="muted">سجّل الدخول إلى الشبكة التجريبية</p>
+      <form id="training-form" autocomplete="off">
+        <label for="username">اسم المستخدم التجريبي</label>
+        <input id="username" name="username" type="text" placeholder="مثال: trainee123" autocomplete="off">
+        <label for="password">كلمة مرور وهمية</label>
+        <input id="password" name="password" type="password" placeholder="لا تستخدم كلمة مرور حقيقية" autocomplete="new-password">
+        <p class="privacy-note">للتدريب فقط: لا تدخل أي كلمة مرور حقيقية.</p>
+        <button type="submit">متابعة التدريب</button>
+      </form>
+      <p class="card-footer">واجهة تعليمية مستقلة · لا يوجد حساب أو تسجيل فعلي</p>
+    </section>
+  </main>
+
+  <section id="lesson" class="lesson" role="dialog" aria-modal="true" aria-labelledby="lesson-title" hidden>
+    <div class="lesson-card">
+      <div class="lesson-icon" aria-hidden="true">🛡️</div>
+      <p class="eyebrow">لحظة تعلّم</p>
+      <h2 id="lesson-title">هذه كانت محاكاة تصيّد تعليمية</h2>
+      <p>توقّف قبل إدخال بياناتك في أي صفحة غير موثوقة. في هذا التدريب لم تُرسل أو تُحفظ أي قيمة أدخلتها.</p>
+      <h3>علامات تستحق التحقق منها</h3>
+      <ul>
+        <li><strong>العنوان:</strong> افحص اسم النطاق حرفًا بحرف، ولا تعتمد على شكل الشعار.</li>
+        <li><strong>الرابط:</strong> افتح الموقع من التطبيق أو العنوان الرسمي الذي تعرفه، لا من رابط مفاجئ.</li>
+        <li><strong>الاستعجال:</strong> رسائل التهديد أو الجوائز العاجلة قد تكون محاولة لخداعك.</li>
+        <li><strong>طلب الأسرار:</strong> لا تشارك كلمة المرور أو رموز التحقق عبر رابط غير موثوق.</li>
+      </ul>
+      <button id="close-lesson" type="button">فهمت، إنهاء التدريب</button>
+    </div>
+  </section>
+
+  <footer>محاكاة تعليمية محلية — لا تنتحل علامة تجارية حقيقية ولا تجمع بيانات اعتماد.</footer>
+  <script src="script.js"></script>
+</body>
+</html>
